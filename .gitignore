@@ -1,4 +1,4 @@
-.gitingore
+.gitignore
 __pycache__
 data
 docker-compose.yml
