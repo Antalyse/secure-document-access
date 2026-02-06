@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      # Map the data folder to host to ensure persistence of counter.txt and kv_store.db
+      - ./data:/app/data
+    environment:
+      # --- Feature Flags ---
+      # Set to 'True' to allow the API to create IDs and Hashes
+      - ENABLE_CREATION_ENDPOINT=True
+      # Set to 'True' to force users to enter the Hash to download
+      - REQUIRE_HASH=False
+      
+      # --- S3 Configuration (Example: Exoscale) ---
+      - S3_ENDPOINT=https://sos-at-vie-1.exo.io
+      - S3_REGION=at-vie-1
+      - S3_BUCKET=my-document-bucket
+      - S3_ACCESS_KEY=MY_ACCESS_KEY
+      - S3_SECRET_KEY=MY_SECRET_KEY

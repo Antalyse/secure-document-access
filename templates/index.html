@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Retrieval</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #f4f7f6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            font-size: 1rem;
+        }
+        input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .info {
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="logo.png" style="margin-left: 14%;">
+        <h2>Secure Document Access</h2>
+        
+        <form action="/retrieve" method="POST">
+            <div class="form-group">
+                <label for="document_id">Document ID</label>
+                <input type="number" id="document_id" name="document_id" placeholder="e.g. 1042" required>
+            </div>
+
+            <!-- 
+                This section is conditionally displayed based on server config.
+                If require_hash is True, the input is required.
+                If False, we can still show it optional, or hide it.
+                Here we render it but mark required logic via Jinja2 
+            -->
+            {% if require_hash %}
+            <div class="form-group">
+                <label for="hash_string">Security Hash</label>
+                <input type="text" id="hash_string" name="hash_string" placeholder="64-character hash" required minlength="{{ hash_min_length }}">
+            </div>
+            {% endif %}
+
+            <button type="submit">Download Document</button>
+        </form>
+        <div class="info">
+            <p>Developed by Antalyse.</p>
+        </div>
+    </div>
+
+</body>
+</html>
